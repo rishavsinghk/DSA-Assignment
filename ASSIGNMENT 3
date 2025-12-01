@@ -1,0 +1,165 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/* --------------------------------------------------------
+   Q1 : MENU DRIVEN STACK USING ARRAY
+---------------------------------------------------------*/
+class StackArr {
+    int arr[100], top;
+public:
+    StackArr() { top = -1; }
+
+    bool isFull() { return top == 99; }
+    bool isEmpty() { return top == -1; }
+
+    void push(int x) {
+        if (isFull()) { cout << "Stack Overflow\n"; return; }
+        arr[++top] = x;
+        cout << x << " pushed\n";
+    }
+
+    void pop() {
+        if (isEmpty()) { cout << "Stack Underflow\n"; return; }
+        cout << arr[top--] << " popped\n";
+    }
+
+    void peek() {
+        if (isEmpty()) { cout << "Stack Empty\n"; return; }
+        cout << "Top: " << arr[top] << endl;
+    }
+
+    void display() {
+        if (isEmpty()) { cout << "Stack Empty\n"; return; }
+        cout << "Stack: ";
+        for (int i = top; i >= 0; i--) cout << arr[i] << " ";
+        cout << endl;
+    }
+};
+
+/* --------------------------------------------------------
+   Q2 : REVERSE STRING USING STACK
+---------------------------------------------------------*/
+string reverseUsingStack(string s) {
+    stack<char> st;
+    for (char c : s) st.push(c);
+    string ans = "";
+    while (!st.empty()) {
+        ans += st.top();
+        st.pop();
+    }
+    return ans;
+}
+
+/* --------------------------------------------------------
+   Q3 : BALANCED PARENTHESES
+---------------------------------------------------------*/
+bool isBalanced(string exp) {
+    stack<char> st;
+    for (char c : exp) {
+        if (c=='(' || c=='{' || c=='[')
+            st.push(c);
+        else if (c==')' || c=='}' || c==']') {
+            if (st.empty()) return false;
+
+            char t = st.top(); st.pop();
+            if ((c==')' && t!='(') ||
+                (c=='}' && t!='{') ||
+                (c==']' && t!='['))
+                return false;
+        }
+    }
+    return st.empty();
+}
+
+/* --------------------------------------------------------
+   Q4 : INFIX TO POSTFIX
+---------------------------------------------------------*/
+int prec(char c) {
+    if (c=='^') return 3;
+    if (c=='*' || c=='/') return 2;
+    if (c=='+' || c=='-') return 1;
+    return 0;
+}
+
+string infixToPostfix(string s) {
+    stack<char> st;
+    string post = "";
+
+    for (char c : s) {
+        if (isalnum(c)) post += c;
+        else if (c=='(') st.push(c);
+        else if (c==')') {
+            while (!st.empty() && st.top()!='(') {
+                post += st.top();
+                st.pop();
+            }
+            st.pop();
+        } else {
+            while (!st.empty() && prec(st.top()) >= prec(c)) {
+                post += st.top();
+                st.pop();
+            }
+            st.push(c);
+        }
+    }
+
+    while (!st.empty()) {
+        post += st.top();
+        st.pop();
+    }
+
+    return post;
+}
+
+/* --------------------------------------------------------
+   Q5 : EVALUATE POSTFIX EXPRESSION
+---------------------------------------------------------*/
+int evaluatePostfix(string exp) {
+    stack<int> st;
+
+    for (char c : exp) {
+
+        if (isdigit(c)) {
+            st.push(c - '0');
+        } else {
+            int b = st.top(); st.pop();
+            int a = st.top(); st.pop();
+
+            switch(c) {
+                case '+': st.push(a + b); break;
+                case '-': st.push(a - b); break;
+                case '*': st.push(a * b); break;
+                case '/': st.push(a / b); break;
+            }
+        }
+    }
+    return st.top();
+}
+
+/* --------------------------------------------------------
+   MAIN FUNCTION : DEMO OF ALL QUESTIONS
+---------------------------------------------------------*/
+int main() {
+
+    cout << "\n========== Q1 STACK MENU DEMO ==========\n";
+    StackArr s;
+    s.push(10);
+    s.push(20);
+    s.display();
+    s.pop();
+    s.peek();
+
+    cout << "\n========== Q2 REVERSE STRING ==========\n";
+    cout << reverseUsingStack("DataStructure") << endl;
+
+    cout << "\n========== Q3 BALANCED PARENTHESES ==========\n";
+    cout << (isBalanced("{(a+b)*c}") ? "Balanced" : "Not Balanced") << endl;
+
+    cout << "\n========== Q4 INFIX TO POSTFIX ==========\n";
+    cout << "Postfix: " << infixToPostfix("(a+b)*c") << endl;
+
+    cout << "\n========== Q5 EVALUATE POSTFIX ==========\n";
+    cout << "Result: " << evaluatePostfix("231*+9-") << endl;
+
+    return 0;
+}
