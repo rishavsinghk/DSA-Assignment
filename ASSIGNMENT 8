@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*=====================================================================
+    BASIC NODE STRUCTURE
+=====================================================================*/
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+    Node(int x) : data(x), left(NULL), right(NULL) {}
+};
+
+/*=====================================================================
+    Q1 — TREE TRAVERSALS (RECURSIVE)
+=====================================================================*/
+
+void preorder(Node* root) {
+    if(!root) return;
+    cout << root->data << " ";
+    preorder(root->left);
+    preorder(root->right);
+}
+
+void inorder(Node* root) {
+    if(!root) return;
+    inorder(root->left);
+    cout << root->data << " ";
+    inorder(root->right);
+}
+
+void postorder(Node* root) {
+    if(!root) return;
+    postorder(root->left);
+    postorder(root->right);
+    cout << root->data << " ";
+}
+
+/*=====================================================================
+    Q2 — BST FUNCTIONS
+=====================================================================*/
+
+Node* insertBST(Node* root, int key) {
+    if(!root) return new Node(key);
+    if(key < root->data) root->left = insertBST(root->left, key);
+    else if(key > root->data) root->right = insertB
+
