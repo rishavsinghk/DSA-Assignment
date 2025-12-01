@@ -1,0 +1,301 @@
+# ASSIGNMENT1
+#que 1
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[100], n = 0, choice, pos, value, key;
+
+    while (true) {
+        cout << "\n---- MENU ----\n";
+        cout << "1. CREATE\n2. DISPLAY\n3. INSERT\n4. DELETE\n5. LINEAR SEARCH\n6. EXIT\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+
+        case 1:
+            cout << "Enter number of elements: ";
+            cin >> n;
+            cout << "Enter elements:\n";
+            for (int i = 0; i < n; i++)
+                cin >> arr[i];
+            break;
+
+        case 2:
+            cout << "Array elements: ";
+            for (int i = 0; i < n; i++)
+                cout << arr[i] << " ";
+            cout << endl;
+            break;
+
+        case 3:
+            cout << "Enter position to insert: ";
+            cin >> pos;
+            cout << "Enter value: ";
+            cin >> value;
+            for (int i = n; i >= pos; i--)
+                arr[i] = arr[i - 1];
+            arr[pos - 1] = value;
+            n++;
+            break;
+
+        case 4:
+            cout << "Enter position to delete: ";
+            cin >> pos;
+            for (int i = pos - 1; i < n - 1; i++)
+                arr[i] = arr[i + 1];
+            n--;
+            break;
+
+        case 5:
+            cout << "Enter value to search: ";
+            cin >> key;
+            for (int i = 0; i < n; i++) {
+                if (arr[i] == key) {
+                    cout << "Found at position " << i + 1 << endl;
+                    goto found;
+                }
+            }
+            cout << "Not found!\n";
+            found:
+            break;
+
+        case 6:
+            return 0;
+
+        default:
+            cout << "Invalid choice\n";
+        }
+    }
+}
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[100], n = 0, choice, pos, value, key;
+
+    while (true) {
+        cout << "\n---- MENU ----\n";
+        cout << "1. CREATE\n2. DISPLAY\n3. INSERT\n4. DELETE\n5. LINEAR SEARCH\n6. EXIT\n";
+        cout << "Enter choice: ";
+        cin >> choice;
+
+        switch (choice) {
+
+        case 1:
+            cout << "Enter number of elements: ";
+            cin >> n;
+            cout << "Enter elements:\n";
+            for (int i = 0; i < n; i++)
+                cin >> arr[i];
+            break;
+
+        case 2:
+            cout << "Array elements: ";
+            for (int i = 0; i < n; i++)
+                cout << arr[i] << " ";
+            cout << endl;
+            break;
+
+        case 3:
+            cout << "Enter position to insert: ";
+            cin >> pos;
+            cout << "Enter value: ";
+            cin >> value;
+            for (int i = n; i >= pos; i--)
+                arr[i] = arr[i - 1];
+            arr[pos - 1] = value;
+            n++;
+            break;
+
+        case 4:
+            cout << "Enter position to delete: ";
+            cin >> pos;
+            for (int i = pos - 1; i < n - 1; i++)
+                arr[i] = arr[i + 1];
+            n--;
+            break;
+
+        case 5:
+            cout << "Enter value to search: ";
+            cin >> key;
+            for (int i = 0; i < n; i++) {
+                if (arr[i] == key) {
+                    cout << "Found at position " << i + 1 << endl;
+                    goto found;
+                }
+            }
+            cout << "Not found!\n";
+            found:
+            break;
+
+        case 6:
+            return 0;
+
+        default:
+            cout << "Invalid choice\n";
+        }
+    }
+}
+#QUE 2
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[100], n;
+
+    cout << "Enter number of elements: ";
+    cin >> n;
+
+    cout << "Enter array: ";
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    for (int i = 0; i < n; i++) {
+        for (int j = i + 1; j < n; j++) {
+            if (arr[i] == arr[j]) {
+                for (int k = j; k < n - 1; k++)
+                    arr[k] = arr[k + 1];
+                n--;
+                j--;
+            }
+        }
+    }
+
+    cout << "Array after removing duplicates: ";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << " ";
+}
+
+#QUE 3
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[5] = {1};
+    
+    for (int i = 0; i < 5; i++)
+        cout << arr[i];
+
+    return 0;
+}
+
+#QUE 4 A
+#include <iostream>
+using namespace std;
+
+int main() {
+    int arr[100], n;
+
+    cout << "Enter n: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    cout << "Reversed array: ";
+    for (int i = n - 1; i >= 0; i--)
+        cout << arr[i] << " ";
+}
+B
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[10][10], b[10][10], c[10][10], r1, c1, r2, c2;
+
+    cout << "Enter rows & cols of Matrix A: ";
+    cin >> r1 >> c1;
+
+    cout << "Enter rows & cols of Matrix B: ";
+    cin >> r2 >> c2;
+
+    if (c1 != r2) {
+        cout << "Multiplication not possible";
+        return 0;
+    }
+
+    cout << "Enter Matrix A:\n";
+    for (int i = 0; i < r1; i++)
+        for (int j = 0; j < c1; j++)
+            cin >> a[i][j];
+
+    cout << "Enter Matrix B:\n";
+    for (int i = 0; i < r2; i++)
+        for (int j = 0; j < c2; j++)
+            cin >> b[i][j];
+
+    for (int i = 0; i < r1; i++) {
+        for (int j = 0; j < c2; j++) {
+            c[i][j] = 0;
+            for (int k = 0; k < c1; k++)
+                c[i][j] += a[i][k] * b[k][j];
+        }
+    }
+
+    cout << "Result Matrix:\n";
+    for (int i = 0; i < r1; i++) {
+        for (int j = 0; j < c2; j++)
+            cout << c[i][j] << " ";
+        cout << endl;
+    }
+}
+C
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[10][10], t[10][10], r, c;
+
+    cout << "Enter rows & cols: ";
+    cin >> r >> c;
+
+    cout << "Enter matrix:\n";
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            cin >> a[i][j];
+
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            t[j][i] = a[i][j];
+
+    cout << "Transpose:\n";
+    for (int i = 0; i < c; i++) {
+        for (int j = 0; j < r; j++)
+            cout << t[i][j] << " ";
+        cout << endl;
+    }
+}
+
+#QUE 5
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[10][10], r, c;
+
+    cout << "Enter rows & cols: ";
+    cin >> r >> c;
+
+    cout << "Enter matrix:\n";
+    for (int i = 0; i < r; i++)
+        for (int j = 0; j < c; j++)
+            cin >> a[i][j];
+
+    for (int i = 0; i < r; i++) {
+        int sum = 0;
+        for (int j = 0; j < c; j++)
+            sum += a[i][j];
+        cout << "Sum of row " << i + 1 << " = " << sum << endl;
+    }
+
+    for (int j = 0; j < c; j++) {
+        int sum = 0;
+        for (int i = 0; i < r; i++)
+            sum += a[i][j];
+        cout << "Sum of column " << j + 1 << " = " << sum << endl;
+    }
+}
+
+
