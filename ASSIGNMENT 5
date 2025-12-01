@@ -1,0 +1,265 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*===========================================
+   NODE DEFINITION
+===========================================*/
+struct Node {
+    int data;
+    Node* next;
+    Node(int x) { data = x; next = NULL; }
+};
+
+/*===========================================
+   SINGLY LINKED LIST CLASS
+===========================================*/
+class LinkedList {
+public:
+    Node* head;
+
+    LinkedList() { head = NULL; }
+
+    // (a) Insert at beginning
+    void insertBegin(int x) {
+        Node* temp = new Node(x);
+        temp->next = head;
+        head = temp;
+    }
+
+    // (b) Insert at end
+    void insertEnd(int x) {
+        Node* temp = new Node(x);
+        if (head == NULL) {
+            head = temp;
+            return;
+        }
+        Node* t = head;
+        while (t->next != NULL)
+            t = t->next;
+        t->next = temp;
+    }
+
+    // (c) Insert before a specific value
+    void insertBefore(int val, int x) {
+        if (head == NULL) return;
+        if (head->data == val) {
+            insertBegin(x);
+            return;
+        }
+        Node* t = head;
+        while (t->next && t->next->data != val)
+            t = t->next;
+
+        if (t->next == NULL) {
+            cout << "Value not found\n";
+            return;
+        }
+
+        Node* temp = new Node(x);
+        temp->next = t->next;
+        t->next = temp;
+    }
+
+    // Insert after value
+    void insertAfter(int val, int x) {
+        Node* t = head;
+        while (t && t->data != val)
+            t = t->next;
+
+        if (t == NULL) {
+            cout << "Value not found\n";
+            return;
+        }
+
+        Node* temp = new Node(x);
+        temp->next = t->next;
+        t->next = temp;
+    }
+
+    // (d) Delete from beginning
+    void deleteBegin() {
+        if (!head) return;
+        Node* t = head;
+        head = head->next;
+        delete t;
+    }
+
+    // (e) Delete from end
+    void deleteEnd() {
+        if (!head) return;
+        if (!head->next) {
+            delete head;
+            head = NULL;
+            return;
+        }
+        Node* t = head;
+        while (t->next->next)
+            t = t->next;
+        delete t->next;
+        t->next = NULL;
+    }
+
+    // (f) Delete specific node
+    void deleteNode(int val) {
+        if (!head) return;
+
+        if (head->data == val) {
+            deleteBegin();
+            return;
+        }
+
+        Node* t = head;
+        while (t->next && t->next->data != val)
+            t = t->next;
+
+        if (!t->next) {
+            cout << "Value not found\n";
+            return;
+        }
+
+        Node* temp = t->next;
+        t->next = t->next->next;
+        delete temp;
+    }
+
+    // (g) Search for a node
+    void search(int val) {
+        int pos = 1;
+        Node* t = head;
+        while (t) {
+            if (t->data == val) {
+                cout << "Found at position: " << pos << endl;
+                return;
+            }
+            pos++;
+            t = t->next;
+        }
+        cout << "Not found\n";
+    }
+
+    // (h) Display list
+    void display() {
+        Node* t = head;
+        while (t) {
+            cout << t->data << "->";
+            t = t->next;
+        }
+        cout << "NULL\n";
+    }
+};
+
+/*===========================================
+  Q2 : COUNT OCCURRENCES AND DELETE THEM
+===========================================*/
+int countAndDelete(LinkedList &L, int key) {
+    int count = 0;
+
+    // Count occurrences
+    Node* t = L.head;
+    while (t) {
+        if (t->data == key) count++;
+        t = t->next;
+    }
+
+    // Delete all occurrences
+    while (L.head && L.head->data == key)
+        L.deleteBegin();
+
+    Node* curr = L.head;
+    while (curr && curr->next) {
+        if (curr->next->data == key) {
+            Node* temp = curr->next;
+            curr->next = curr->next->next;
+            delete temp;
+        } else {
+            curr = curr->next;
+        }
+    }
+
+    return count;
+}
+
+/*===========================================
+   Q3 : FIND MIDDLE OF LINKED LIST
+===========================================*/
+int findMiddle(Node* head) {
+    if (!head) return -1;
+    Node* slow = head;
+    Node* fast = head;
+
+    while (fast && fast->next) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+    return slow->data;
+}
+
+/*===========================================
+   Q4 : REVERSE A LINKED LIST
+===========================================*/
+Node* reverseLL(Node* head) {
+    Node *prev = NULL, *curr = head, *next = NULL;
+
+    while (curr) {
+        next = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = next;
+    }
+    return prev;
+}
+
+/*===========================================
+   MAIN FUNCTION : DEMONSTRATION OF Q1–Q4
+===========================================*/
+int main() {
+    LinkedList L;
+
+    cout << "\n--- Q1 MENU OPERATIONS DEMO ---\n";
+    L.insertBegin(30);
+    L.insertEnd(50);
+    L.insertAfter(30, 35);
+    L.insertBefore(35, 25);
+    L.display();
+    L.deleteNode(35);
+    L.display();
+    L.search(50);
+
+    cout << "\n--- Q2 COUNT + DELETE OCCURRENCES ---\n";
+    LinkedList L2;
+    L2.insertEnd(1);
+    L2.insertEnd(2);
+    L2.insertEnd(1);
+    L2.insertEnd(2);
+    L2.insertEnd(1);
+    L2.insertEnd(3);
+    L2.insertEnd(1);
+
+    L2.display();
+    int cnt = countAndDelete(L2, 1);
+    cout << "Count: " << cnt << endl;
+    L2.display();
+
+    cout << "\n--- Q3 MIDDLE OF LINKED LIST ---\n";
+    LinkedList L3;
+    L3.insertEnd(1);
+    L3.insertEnd(2);
+    L3.insertEnd(3);
+    L3.insertEnd(4);
+    L3.insertEnd(5);
+
+    cout << "Middle: " << findMiddle(L3.head) << endl;
+
+    cout << "\n--- Q4 REVERSE LINKED LIST ---\n";
+    LinkedList L4;
+    L4.insertEnd(1);
+    L4.insertEnd(2);
+    L4.insertEnd(3);
+    L4.insertEnd(4);
+    L4.display();
+
+    L4.head = reverseLL(L4.head);
+    L4.display();
+
+    return 0;
+}
