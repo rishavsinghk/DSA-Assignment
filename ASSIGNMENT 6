@@ -1,0 +1,23 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+/*====================================================
+   NODE DEFINITIONS
+=====================================================*/
+
+struct DNode {
+    int data;
+    DNode* next;
+    DNode* prev;
+    DNode(int x) { data = x; next = prev = NULL; }
+};
+
+struct CNode {
+    int data;
+    CNode* next;
+    CNode(int x) { data = x; next = NULL; }
+};
+
+/*====================================================
+   Q1 – DOUBLY LINKED LIST (INSERT, DELETE, SEARCH)
+===============================
